@@ -1,0 +1,7 @@
+rasa
+pymongo
+# Optional: For Llama 3 integration (choose one based on your setup)
+llama-cpp-python  # For local Llama 3 inference
+transformers  # For HuggingFace Llama 3 API
+# If you use OpenAI-compatible endpoints for Llama 3, add openai
+openai 

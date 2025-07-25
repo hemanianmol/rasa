@@ -1,0 +1,71 @@
+{
+  "type": "MaxHistoryTrackerFeaturizer",
+  "state_featurizer": {
+    "action_texts": [],
+    "entity_tag_specs": [],
+    "feature_states": {
+      "intent": {
+        "affirm": 0,
+        "ask_broker_details": 1,
+        "ask_project_info": 2,
+        "ask_property_price": 3,
+        "back": 4,
+        "bot_challenge": 5,
+        "deny": 6,
+        "goodbye": 7,
+        "greet": 8,
+        "mood_great": 9,
+        "mood_unhappy": 10,
+        "nlu_fallback": 11,
+        "out_of_scope": 12,
+        "restart": 13,
+        "session_start": 14
+      },
+      "action_name": {
+        "action_listen": 0,
+        "action_restart": 1,
+        "action_session_start": 2,
+        "action_default_fallback": 3,
+        "action_deactivate_loop": 4,
+        "action_revert_fallback_events": 5,
+        "action_default_ask_affirmation": 6,
+        "action_default_ask_rephrase": 7,
+        "action_two_stage_fallback": 8,
+        "action_unlikely_intent": 9,
+        "action_back": 10,
+        "...": 11,
+        "action_extract_slots": 12,
+        "action_property_price": 13,
+        "action_broker_details": 14,
+        "action_project_info": 15,
+        "utter_ask_broker_details": 16,
+        "utter_ask_project_info": 17,
+        "utter_ask_property_price": 18,
+        "utter_broker_not_found": 19,
+        "utter_cheer_up": 20,
+        "utter_did_that_help": 21,
+        "utter_fallback": 22,
+        "utter_goodbye": 23,
+        "utter_greet": 24,
+        "utter_happy": 25,
+        "utter_iamabot": 26,
+        "utter_project_not_found": 27
+      },
+      "entities": {
+        "address": 0,
+        "broker_name": 1,
+        "project_name": 2,
+        "property_name": 3
+      },
+      "slots": {
+        "property_name_0": 0,
+        "address_0": 1,
+        "broker_name_0": 2,
+        "project_name_0": 3
+      },
+      "active_loop": {}
+    }
+  },
+  "remove_duplicates": true,
+  "max_history": 5
+}

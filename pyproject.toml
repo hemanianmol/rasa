@@ -1,0 +1,13 @@
+[project]
+name = "homelead"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "llama-cpp-python>=0.3.14",
+    "openai>=1.97.1",
+    "pymongo>=4.13.2",
+    "rasa>=0.1.1",
+    "transformers>=4.53.3",
+]

@@ -1,0 +1,14 @@
+[
+  {
+    "name": "broker_name",
+    "pattern": ".+"
+  },
+  {
+    "name": "project_name",
+    "pattern": ".+"
+  },
+  {
+    "name": "property_name",
+    "pattern": ".+"
+  }
+]

@@ -1,0 +1,8 @@
+version: "3.1"
+
+stories:
+
+- story: generic search
+  steps:
+    - intent: search_database
+    - action: action_search_database
