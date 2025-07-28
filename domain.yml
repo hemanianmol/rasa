@@ -5,50 +5,14 @@ intents:
   - goodbye
   - search_database
 
-entities:
-  - property_name
-  - project_name
-  - broker_name
-  - blockName
-  - city
-
-slots:
-  property_name:
-    type: text
-    mappings:
-      - type: from_entity
-        entity: property_name
-  project_name:
-    type: text
-    mappings:
-      - type: from_entity
-        entity: project_name
-  broker_name:
-    type: text
-    mappings:
-      - type: from_entity
-        entity: broker_name
-  blockName:
-    type: text
-    mappings:
-      - type: from_entity
-        entity: blockName
-  city:
-    type: text
-    mappings:
-      - type: from_entity
-        entity: city
-
 responses:
-  utter_fallback:
-    - text: "Sorry, I couldn't find any matching property, project, or broker in my database."
   utter_goodbye:
     - text: "Bye"
   utter_greet:
   - text: "Hey! How are you?"
 
 actions:
-  - action_search_database
+  - action_unified_llm
 
 session_config:
   session_expiration_time: 60

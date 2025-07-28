@@ -2,7 +2,7 @@ version: "3.1"
 
 stories:
 
-- story: generic search
+- story: unified llm flow
   steps:
     - intent: search_database
-    - action: action_search_database
+    - action: action_unified_llm

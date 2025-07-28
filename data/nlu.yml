@@ -21,49 +21,37 @@ nlu:
 
 - intent: search_database
   examples: |
-    - Tell me about the property [mall of jaipur](property_name)
-    - Tell me about the project [Lush Valley Residences](project_name)
+    - Tell me about the property mall of jaipur
+    - Tell me about the project Lush Valley Residences
     - List all properties
     - List all brokers
-    - What is the price of [mall of jaipur](property_name)
-    - [Lush Valley Residences](project_name)
-    - [Ganga View Towers](project_name)
-    - [Horizon Group](broker_name)
-    - I want to know about [lush valley residences](project_name)
-    - Give me details of the property [mall of jaipur](property_name)
+    - What is the price of mall of jaipur
+    - Lush Valley Residences
+    - Ganga View Towers
+    - Horizon Group
+    - I want to know about lush valley residences
+    - Give me details of the property mall of jaipur
     - Show me all properties
     - What properties are available?
     - List of property
     - List of broker
     - Best price of the property
-    - best property is [lush valley residences](project_name)
-    - best property [lush valley residences](project_name)
-    - [property_name]
-    - [project_name]
-    - [broker_name]
-    - Show me all commercial properties in [BLOCK B](blockName)
+    - best property is lush valley residences
+    - best property lush valley residences
+    - Show me all commercial properties in BLOCK B
     - How many brokers are there?
     - Total number of projects
-    - List all properties in [Uttar Pradesh](city)
-    - Show me broker details for [Murari Singh](broker_name)
-    - What is the minBudget for [BLOCK B Floor 4 Shop 179](property_name)?
+    - List all properties in Uttar Pradesh
+    - Show me broker details for Murari Singh
+    - What is the minBudget for BLOCK B Floor 4 Shop 179?
     - List all ready to shift projects
     - Show me all properties with 3 bedrooms
-    - List all brokers in [Mumbai](city)
-    - Show me project details for [Ganga View Towers](project_name)
-
-- regex: property_name
-  examples: |
-    - .+
-- regex: project_name
-  examples: |
-    - .+
-- regex: broker_name
-  examples: |
-    - .+
-- regex: blockName
-  examples: |
-    - .+
-- regex: city
-  examples: |
-    - .+
+    - List all brokers in Mumbai
+    - Show me project details for Ganga View Towers
+    - Show me brokers in Mumbai
+    - Find commercial properties
+    - List residential projects
+    - Show me leads from Delhi
+    - Find land plots
+    - Properties under 20 lakhs
+    - Ready to move projects
