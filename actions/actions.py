@@ -11,6 +11,7 @@ from rasa_sdk.executor import CollectingDispatcher
 from pymongo import MongoClient
 from dotenv import load_dotenv
 load_dotenv()
+import difflib
 
 def call_llama3_together(prompt, api_key):
     url = "https://api.together.xyz/v1/completions"
@@ -35,6 +36,18 @@ class ActionSearchDatabase(Action):
 
     def run(self, dispatcher, tracker, domain):
         user_message = tracker.latest_message.get("text")
+        intent = tracker.latest_message.get("intent", {}).get("name")
+        print("[DEBUG] Extracted intent:", intent)
+        greeting_phrases = ["hi", "hello", "hey", "good morning", "good evening"]
+        if any(phrase in user_message.lower() for phrase in greeting_phrases):
+            dispatcher.utter_message(response="utter_greet")
+            return []
+        if intent == "greet":
+            dispatcher.utter_message(response="utter_greet")
+            return []
+        if intent == "goodbye":
+            dispatcher.utter_message(response="utter_goodbye")
+            return []
         print("[DEBUG] User message:", user_message)
         mongo_uri = os.getenv("MONGODB_URI")
         mongo_db = os.getenv("MONGODB_DB", "homelead")
@@ -112,6 +125,58 @@ class ActionSearchDatabase(Action):
         all_brokers = list(db["brokers"].find())
         all_properties = list(db["properties"].find())
         all_projects = list(db["projects"].find())
+
+        # --- Robust fuzzy matching for specific queries ---
+        # Properties
+        prop_fields = ["propertyType", "blockName", "floorName", "series", "shopNo", "furnishedStatus", "minBudget", "maxBudget", "facing", "vastuCompliant", "carpetArea", "builtUpArea", "superBuiltUpArea", "carpetAreaType", "builtUpAreaType", "superBuiltUpAreaType", "noOfBalconies", "noOfBathRooms", "noOfBedRooms", "noOfKitchens", "noOfDrawingRooms", "noOfParkingLots"]
+        prop_query_value = get_entity_value("property_name") or extract_likely_name(user_message, ["property"]) or user_message
+        print("[DEBUG] Property search value:", prop_query_value)
+        property_blobs = []
+        property_docs = []
+        for doc in all_properties:
+            blob = " ".join([str(v).lower() for k, v in doc.items() if k in prop_fields and isinstance(v, (str, int, float))])
+            property_blobs.append(blob)
+            property_docs.append(doc)
+        prop = None
+        matches = difflib.get_close_matches(prop_query_value.lower(), property_blobs, n=1, cutoff=0.5)
+        if matches:
+            idx = property_blobs.index(matches[0])
+            prop = property_docs[idx]
+        print("[DEBUG] Fuzzy-matched property:", prop)
+
+        # Projects
+        proj_fields = ["name", "slug", "category", "projectStatus", "minBudget", "maxBudget", "startDate", "completionDate", "countryCode", "phone", "email", "address", "zipCode", "reraRegistrationNumber", "projectRegistrationNumber", "projectType", "projectUnitSubType", "layoutPlanImages"]
+        proj_query_value = get_entity_value("project_name") or extract_likely_name(user_message, ["project"]) or user_message
+        print("[DEBUG] Project search value:", proj_query_value)
+        project_blobs = []
+        project_docs = []
+        for doc in all_projects:
+            blob = " ".join([str(v).lower() for k, v in doc.items() if k in proj_fields and isinstance(v, (str, int, float))])
+            project_blobs.append(blob)
+            project_docs.append(doc)
+        proj = None
+        matches = difflib.get_close_matches(proj_query_value.lower(), project_blobs, n=1, cutoff=0.5)
+        if matches:
+            idx = project_blobs.index(matches[0])
+            proj = project_docs[idx]
+        print("[DEBUG] Fuzzy-matched project:", proj)
+
+        # Brokers
+        brok_fields = ["name", "company", "countryCode", "phone", "city", "state", "address", "zipCode", "commissionPercent", "bankDetails", "realEstateLicenseDetails", "yearStartedInRealEstate", "status"]
+        brok_query_value = get_entity_value("broker_name") or extract_likely_name(user_message, ["broker"]) or user_message
+        print("[DEBUG] Broker search value:", brok_query_value)
+        broker_blobs = []
+        broker_docs = []
+        for doc in all_brokers:
+            blob = " ".join([str(v).lower() for k, v in doc.items() if k in brok_fields and isinstance(v, (str, int, float))])
+            broker_blobs.append(blob)
+            broker_docs.append(doc)
+        brok = None
+        matches = difflib.get_close_matches(brok_query_value.lower(), broker_blobs, n=1, cutoff=0.5)
+        if matches:
+            idx = broker_blobs.index(matches[0])
+            brok = broker_docs[idx]
+        print("[DEBUG] Fuzzy-matched broker:", brok)
 
         # --- Specific queries: use extracted entity, then likely name, then fallback ---
         # Try properties (search across multiple fields)

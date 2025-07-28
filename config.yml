@@ -11,13 +11,7 @@ assistant_id: 20250723-143554-ebony-defense
 language: en
 
 pipeline:
-  - name: WhitespaceTokenizer
-  - name: RegexEntityExtractor
-  - name: RegexFeaturizer
-  - name: CountVectorsFeaturizer
-  - name: DIETClassifier
-  - name: EntitySynonymMapper
-  - name: ResponseSelector
+  - name: "custom_components.llm_nlu_graph_component.LLMIntentEntityGraphComponent"
 
 # Configuration for Rasa Core.
 # https://rasa.com/docs/rasa/core/policies/
